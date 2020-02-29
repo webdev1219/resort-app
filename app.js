@@ -23,7 +23,7 @@ mongoose
 	});
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const resortsRouter = require('./routes/resorts');
 
 hbs.registerPartials(path.join(__dirname, '/views/partials'));
 
@@ -40,7 +40,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/resorts', resortsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
