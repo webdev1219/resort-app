@@ -4,8 +4,23 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const hbs = require('hbs');
-
+const mongoose = require('mongoose');
 require('dotenv').config();
+
+const dbPath = process.env.MONGODB_URI;
+
+mongoose
+	.connect(dbPath, {
+		useCreateIndex: true,
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	})
+	.then(() => {
+		console.log(`conected to ${dbPath}`);
+	})
+	.catch(error => {
+		console.error(error);
+	});
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
