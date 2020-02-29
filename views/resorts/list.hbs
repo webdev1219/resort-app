@@ -1,6 +1,11 @@
 <h1>List all resorts</h1>
 <ul>
   {{#each resorts }}
-  <li>{{ this.name }}</li>
+  <li>
+    {{ this.name }}
+    <form action="/resorts/{{this._id}}/delete" method="post">
+      <button type="submit">submit</button>
+    </form>
+  </li>
   {{/each}}
 </ul>
