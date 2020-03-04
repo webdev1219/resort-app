@@ -48,7 +48,9 @@ router.post('/:id/delete', (req, res, next) => {
 // GET /resorts/:params/update?query=valor
 router.get('/:id/update', (req, res, next) => {
 	const { id } = req.params;
-	let resort;
+	// OPCION A
+
+	// let resort;
 	// Resort.findById(id)
 	// 	.then(foundResort => {
 	// 		resort = foundResort;
@@ -60,6 +62,8 @@ router.get('/:id/update', (req, res, next) => {
 	// 	.catch(error => {
 	// 		next(error);
 	// 	});
+
+	// OPCION B
 	Review.find({ resort_id: id })
 		.populate('resort_id')
 		.then(reviews => {
