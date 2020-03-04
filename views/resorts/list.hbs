@@ -2,7 +2,7 @@
 <ul>
   {{#each resorts }}
   <li>
-    {{ this.name }}
+    <a href="/resorts/{{this._id}}/update">{{ this.name }}</a>
     <form action="/resorts/{{this._id}}/delete" method="post">
       <button type="submit">submit</button>
     </form>

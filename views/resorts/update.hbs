@@ -1,0 +1,24 @@
+{{!-- action to route post --}}
+<form action="/resorts/{{resort._id}}" method="post">
+  <label for="name">name</label>
+  <input type="text" name="name" id="resort-name" placeholder="name" value="{{resort.name}}">
+  <label for="latitude">latitude</label>
+  <input type="text" name="latitude" id="resort-latitude" value="{{resort.latitude}}">
+  <label for="longitude">longitude</label>
+  <input type="text" name="longitude" id="resort-longitude" value="{{resort.longitude}}">
+  <button type="submit">submit</button>
+</form>
+<h2>Review Resort</h2>
+<form action="/resorts/{{resort._id}}/review" method="post">
+  <label for="text">text</label>
+  <input type="text" name="text" id="review-text" placeholder="text">
+  <label for="author">author</label>
+  <input type="text" name="author" id="review-author">
+  <button type="submit">submit</button>
+</form>
+<h2>Reviews</h2>
+<ul>
+  {{#each reviews}}
+  <li>{{this.text}}</li>
+  {{/each}}
+</ul>
