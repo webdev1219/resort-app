@@ -2,19 +2,25 @@
 const express = require('express');
 const Resort = require('../models/Resort');
 const Review = require('../models/Review');
+const middleware = require('../helpers/authMiddleware');
 
 const router = express.Router();
 
+router.use(middleware.checkIfUserLoggedIn);
+
 /* GET /resorts */
 router.get('/', (req, res, next) => {
+	const { currentUser } = req.session;
 	Resort.find()
 		.then(resorts => {
 			res.render('resorts/list', {
 				resorts,
+				currentUser,
 			});
 		})
 		.catch(next);
 });
+
 // GET /resorts/add
 router.get('/add', (req, res) => {
 	res.render('resorts/create');

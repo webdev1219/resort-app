@@ -5,6 +5,10 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const hbs = require('hbs');
 const mongoose = require('mongoose');
+
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+
 require('dotenv').config();
 
 const dbPath = process.env.MONGODB_URI;
@@ -32,6 +36,23 @@ const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+//
+app.use(
+	session({
+		store: new MongoStore({
+			mongooseConnection: mongoose.connection,
+			ttl: 24 * 60 * 60, // 1 day
+		}),
+		secret: 'ironhack',
+		resave: true,
+		saveUninitialized: true,
+		name: 'ironhack',
+		cookie: {
+			maxAge: 24 * 60 * 60 * 1000,
+		},
+	})
+);
 
 app.use(logger('dev'));
 app.use(express.json());
