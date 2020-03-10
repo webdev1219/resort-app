@@ -16,6 +16,7 @@ router.get('/', (req, res, next) => {
 			res.render('resorts/list', {
 				resorts,
 				currentUser,
+				info: req.flash('info'),
 			});
 		})
 		.catch(next);

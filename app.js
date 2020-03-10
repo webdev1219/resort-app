@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const hbs = require('hbs');
 const mongoose = require('mongoose');
-
+const flash = require('connect-flash');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
@@ -38,6 +38,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 //
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(
 	session({
 		store: new MongoStore({
@@ -53,12 +59,7 @@ app.use(
 		},
 	})
 );
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
 
 app.use('/', indexRouter);
 app.use('/resorts', resortsRouter);

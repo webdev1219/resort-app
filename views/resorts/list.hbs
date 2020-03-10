@@ -1,5 +1,8 @@
 <h1>List all resorts</h1>
 <p>welcome {{ currentUser.username }}</p>
+{{#if info}}
+{{info}}
+{{/if}}
 <ul>
   {{#each resorts }}
   <li>

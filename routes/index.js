@@ -47,25 +47,29 @@ router.post('/signup', (req, res, next) => {
 });
 
 router.get('/login', (req, res, next) => {
-	res.render('auth/login');
+	res.render('auth/login', { error: req.flash('error') });
 });
 
 router.post('/login', (req, res, next) => {
 	const { username, password } = req.body;
 	if (username === '' || password === '') {
-		res.render('auth/login', { error: 'no pueden estar vacios' });
+		req.flash('error', 'no pueden estar vacios');
+		res.redirect('/login');
 	} else {
 		User.findOne({ username })
 			.then(user => {
 				if (!user) {
-					res.render('auth/login', { error: 'no estas registrado' });
+					req.flash('error', 'no estas registrado');
+					res.redirect('/login');
 				} else {
 					console.log(bcrypt.compareSync(password, user.hashedPassword));
 					if (bcrypt.compareSync(password, user.hashedPassword)) {
 						req.session.currentUser = user;
+						req.flash('info', 'welcome !!!!!');
 						res.redirect('/resorts');
 					} else {
-						res.render('auth/login', { error: 'usuario o contraseña incorrectos' });
+						req.flash('error', 'usuario o contraseña incorrectos');
+						res.redirect('/login');
 					}
 				}
 			})
